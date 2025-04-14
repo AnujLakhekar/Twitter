@@ -4,8 +4,9 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon backend/src/index.js",
-    "produce": "node backend/src/index.js"
+    "dev": "NODE_ENV=devlopement nodemon backend/src/index.js",
+    "start": "NODE_ENV=production node backend/src/index.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
     "multer": "^1.4.5-lts.2",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "nodmeon": "^0.0.1-security"
