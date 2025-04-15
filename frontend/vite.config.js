@@ -6,11 +6,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    proxy:{
-      "/api": {
-        target: "http://localhost:8000",
-        changeOrigin: true,
-      }
-    }
+    proxy: {
+"/api": {
+ target: "https://twitter-8s4z.onrender.com",
+ changeOrigin: true,
+}
+}
   }
 })

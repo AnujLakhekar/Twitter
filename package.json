@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "NODE_ENV=devlopement nodemon backend/src/index.js",
-    "start": "NODE_ENV=production node backend/src/index.js",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+    "start": "NODE_ENV=production npm install && node backend/src/index.js",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",

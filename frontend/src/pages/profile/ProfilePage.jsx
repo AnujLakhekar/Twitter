@@ -44,12 +44,9 @@ const ProfilePage = () => {
 
   const { mutate: follow, isPending } = useMutation({
     mutationFn: async (userId) => {
-      const res = await fetch(`/api/follow/${userId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
+      const res = await fetch(`/api/follow/${userId}`);
       const data = await res.json();
+      console.log(data)
       if (!res.ok) throw new Error(data.message);
     },
     onSuccess: () => {
