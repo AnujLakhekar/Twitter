@@ -14,7 +14,8 @@ const Sidebar = () => {
     mutationFn: async () => {
       try {
        const res = await fetch("https://twitterbackend-205b.onrender.com/api/auth/logout", {
-          method: "POST"
+          method: "POST",
+          credentials: "include"
         })
         const data = res.data;
         Navigate("/login"); 

@@ -28,7 +28,9 @@ const {data:posts, isLoading, refetch, isRefetching} = useQuery({
   queryKey: ["posts"],
   queryFn: async () => {
     try {
-      const res = await fetch(Post_EndPoint);
+      const res = await fetch(Post_EndPoint, {
+        credentials: "include",
+      });
       
     if (!res.ok) throw new Error("somethig went wrong");
     

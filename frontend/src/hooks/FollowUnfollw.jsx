@@ -8,7 +8,8 @@ const useFollow = async () => {
     mutationFn: async (userId) => {
       try {
         const res = await fetch(`https://twitterbackend-205b.onrender.com/api/follow/${userId}`, {
-          method: "POST"
+          method: "POST",
+          credentials: "include"
         });
         const data = await res.json();
         if(!res.ok) throw new Error(data.message);

@@ -21,7 +21,8 @@ const Post = ({ post }) => {
 	  mutationFn: async () => {
 	    try {
 	      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/post/delete/${post._id}`, {
-	        method: "DELETE"
+	        method: "DELETE",
+	        credentials: "include"
 	        });
 	        
 	       const data = await res.json();

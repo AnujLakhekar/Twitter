@@ -35,7 +35,9 @@ const ProfilePage = () => {
   const { data: user, isPending: isLoading, refetch } = useQuery({
     queryKey: ["userProfile"],
     queryFn: async () => {
-      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/user/profile/${username}`);
+      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/user/profile/${username}`, {
+        credentials: "include"
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
       return data;
@@ -44,7 +46,9 @@ const ProfilePage = () => {
 
   const { mutate: follow, isPending } = useMutation({
     mutationFn: async (userId) => {
-      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/follow/${userId}`);
+      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/follow/${userId}`, {
+        credentials: "include"
+      });
       const data = await res.json();
       console.log(data)
       if (!res.ok) throw new Error(data.message);
