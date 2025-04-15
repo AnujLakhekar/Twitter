@@ -7,7 +7,7 @@ const useFollow = async () => {
   const {mutate:follow, isPending, isError, error} = useMutation({
     mutationFn: async (userId) => {
       try {
-        const res = await fetch(`/api/follow/${userId}`, {
+        const res = await fetch(`https://twitterbackend-205b.onrender.com/api/follow/${userId}`, {
           method: "POST"
         });
         const data = await res.json();

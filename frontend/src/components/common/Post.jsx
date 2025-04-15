@@ -20,7 +20,7 @@ const Post = ({ post }) => {
 	const {mutate:deletePosts, isPending, error, isError} = useMutation({
 	  mutationFn: async () => {
 	    try {
-	      const res = await fetch(`/api/post/delete/${post._id}`, {
+	      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/post/delete/${post._id}`, {
 	        method: "DELETE"
 	        });
 	        
@@ -39,7 +39,7 @@ const Post = ({ post }) => {
 	const {mutate:commentPost, isPending:isCommenting, error:errorComment} = useMutation({
 	  mutationFn: async () => {
 	   try {
-	     const res = await fetch(`/api/post/comment/${post._id}`, {
+	     const res = await fetch(`https://twitterbackend-205b.onrender.com/api/post/comment/${post._id}`, {
 	       method: "POST",
 	       headers: {
 	         "Content-Type":"application/json"

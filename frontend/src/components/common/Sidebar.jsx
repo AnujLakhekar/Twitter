@@ -13,7 +13,7 @@ const Sidebar = () => {
   const {mutate: logout, isPending, isError, error} = useMutation({
     mutationFn: async () => {
       try {
-       const res = await fetch("/api/auth/logout", {
+       const res = await fetch("https://twitterbackend-205b.onrender.com/api/auth/logout", {
           method: "POST"
         })
         const data = res.data;

@@ -19,7 +19,7 @@ cloudinary.config({
 });
 
 const app = express();
-const PORT = process.env.PORT || 5000; // Set default port if not available
+const PORT = process.env.PORT || 8000; // Set default port if not available
 
 // Middleware Setup
 app.use(cors({
