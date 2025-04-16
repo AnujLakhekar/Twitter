@@ -46,7 +46,7 @@ export const signup = async (req, res) => {
   
   if (newUser) {
     await newUser.save();
-   generateToken(newUser._id, res);
+  const token = generateToken(newUser._id, res);
    
     res.status(200).json({
     client: {
@@ -58,6 +58,7 @@ export const signup = async (req, res) => {
       followings: newUser.followings,
       profilePic: newUser.profilePic,
       coverImg: newUser.coverImg,
+      token: token
     }
   })
   } else {
@@ -88,7 +89,7 @@ export const login = async (req, res) => {
     }
 
     
-    generateToken(fetchedUser._id, res);
+  const token = generateToken(fetchedUser._id, res);
     res.status(200).json({
       client: {
         id: fetchedUser._id,
@@ -99,6 +100,7 @@ export const login = async (req, res) => {
         followings: fetchedUser.followings,
         profilePic: fetchedUser.profilePic,
         coverImg: fetchedUser.coverImg,
+        token: token
       }
     });
 

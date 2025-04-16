@@ -23,9 +23,10 @@ const PORT = process.env.PORT || 8000; // Set default port if not available
 
 // Middleware Setup
 app.use(cors({
-  origin: "https://twitter-hnb1.onrender.com",  // Adjust as needed
+  origin: "*", // Allow all origins
   credentials: true
 }));
+
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 
