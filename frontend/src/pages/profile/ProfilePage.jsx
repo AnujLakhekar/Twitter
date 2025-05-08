@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom"
+import {toast} from "react-hot-toast"
 
 import Posts from "../../components/common/Posts";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
@@ -35,7 +36,7 @@ const ProfilePage = () => {
   const { data: user, isPending: isLoading, refetch } = useQuery({
     queryKey: ["userProfile"],
     queryFn: async () => {
-      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/user/profile/${username}`, {
+      const res = await fetch(`http://localhost:8000/api/user/profile/${username}`, {
         credentials: "include"
       });
       const data = await res.json();
@@ -44,14 +45,25 @@ const ProfilePage = () => {
     },
   });
 
-  const { mutate: follow, isPending } = useMutation({
+  const { mutate: follow, isPending, error:followError } = useMutation({
     mutationFn: async (userId) => {
-      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/follow/${userId}`, {
+      try {
+        const res = await fetch(`http://localhost:8000/api/user/follow/${userId}`, {
+        method: "POST",
+        headers: {
+	          "Content-Type": "application/json",
+	        },
         credentials: "include"
       });
       const data = await res.json();
       console.log(data)
       if (!res.ok) throw new Error(data.message);
+      
+      return data;
+      } catch (e) {
+        toast.error(e.message)
+        throw new Error(e.message)
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
@@ -61,13 +73,24 @@ const ProfilePage = () => {
 
   const { mutate: updateProfile, isPending: isUpdating, error: updateError } = useMutation({
     mutationFn: async () => {
-      const formData = new FormData();
-      if (coverImg) formData.append("coverImg", coverImg);
-      if (profileImg) formData.append("profileImg", profileImg);
 
-      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/user/updateProfile`, {
+     let payload;
+      if (coverImg) {
+       payload = {
+        coverImg,
+        };
+      } else if (profileImg) {
+        payload = {
+        profileImg,
+        };
+      }
+    
+      const res = await fetch(`http://localhost:8000/api/user/updateProfile`, {
         method: "POST",
-        body: formData,
+        headers: {
+  "Content-Type": "application/json",
+},
+        body: JSON.stringify(payload),
         credentials: "include",
       });
 
@@ -97,10 +120,10 @@ const ProfilePage = () => {
     reader.onload = () => {
       if (type === "coverImg") {
         setCoverImgPreview(reader.result);
-        setCoverImg(file);
+        setCoverImg(reader.result);
       } else {
         setProfileImgPreview(reader.result);
-        setProfileImg(file);
+        setProfileImg(reader.result);
       }
     };
     reader.readAsDataURL(file);
@@ -161,7 +184,7 @@ const ProfilePage = () => {
             <div className='avatar absolute -bottom-16 left-4'>
               <div className='w-32 rounded-full relative group/avatar'>
                 <img
-                  src={profileImgPreview || user.profileImg || "/avatar-placeholder.png"}
+                  src={profileImgPreview || user.profilePic || "/avatar-placeholder.png"}
                   alt='avatar'
                 />
                 {isMyProfile && (

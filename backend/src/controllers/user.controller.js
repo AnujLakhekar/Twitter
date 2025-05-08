@@ -58,6 +58,9 @@ export const followUnfollowUser = async (req, res) => {
     const userTomodify = await User.findById(id);
     const currentUser = await User.findById(req.user._id);
     
+    console.log(userTomodify);
+    console.log(currentUser)
+    
     if (!userTomodify || !currentUser) return res.status(400).json({
       message: "user not found"
     });
@@ -68,12 +71,12 @@ export const followUnfollowUser = async (req, res) => {
       })
     }
     
-    const isFollowing = currentUser.Following.includes(id);
+    const isFollowing = currentUser.following.includes(id);
     
     if (isFollowing) {
       // unfollow
       await User.findByIdAndUpdate(id, {$pull: {followers: req.user._id}})
-      await User.findByIdAndUpdate(id, {$pull: {following: id}})
+      await User.findByIdAndUpdate(req.user._id, {$pull: {following: id}})
       
       res.status(200).json({
         message: `successfully followed ${userTomodify.username}`
@@ -82,7 +85,7 @@ export const followUnfollowUser = async (req, res) => {
       // follow
       await User.findByIdAndUpdate(id, {$push: {followers: req.user._id}})
       
-      await User.findByIdAndUpdate(id, {$push: {following: id}});
+      await User.findByIdAndUpdate(req.user._id, {$push: {following: id}});
       const newNotification = new notification({
         type: "follow",
         from: req.user._id,
@@ -101,7 +104,16 @@ export const followUnfollowUser = async (req, res) => {
 
 
 export const updateUser = async (req, res) => {
-	const { fullName, email, username, currentPassword, newPassword, bio, link } = req.body;
+	const {
+  fullName = "",
+  email = "",
+  username = "",
+  currentPassword = "",
+  newPassword = "",
+  bio = "",
+  link = "",
+} = req.body || {};
+
 	let { profileImg, coverImg } = req.body;
 
 	const userId = req.user._id;
@@ -132,7 +144,9 @@ export const updateUser = async (req, res) => {
 			}
 
 			const uploadedResponse = await cloudinary.uploader.upload(profileImg);
-			profileImg = uploadedResponse.secure_url;
+		  	profileImg = uploadedResponse.secure_url;
+		  	
+		  	console.log(profileImg)
 		}
 
 		if (coverImg) {
@@ -149,7 +163,7 @@ export const updateUser = async (req, res) => {
 		user.username = username || user.username;
 		user.bio = bio || user.bio;
 		user.link = link || user.link;
-		user.profileImg = profileImg || user.profileImg;
+		user.profilePic = profileImg || user.profilePic;
 		user.coverImg = coverImg || user.coverImg;
 
 		user = await user.save();

@@ -13,7 +13,7 @@ const NotificationPage = () => {
 	  queryKey: ["notifications"],
 	  queryFn: async () => {
 	    try {
-	      const res = await fetch("https://twitterbackend-205b.onrender.com/api/notifications", {
+	      const res = await fetch("http://localhost:8000/api/notifications", {
 	        credentials: "include"
 	      });
 	      const data = await res.json();
@@ -28,7 +28,7 @@ const NotificationPage = () => {
 	const {mutate:deleteNotification, isPending, isError, error} = useMutation({
 	  mutationFn: async () => {
 	    try {
-	      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/delete`, {
+	      const res = await fetch(`http://localhost:8000/api/delete`, {
 	        credentials: "include"
 	      });
 	      const data = await res.json();

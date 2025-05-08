@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { formatMemberSinceDate } from "../../utils/Date/index.js";
 
 const EditProfileModal = () => {
 	const [formData, setFormData] = useState({
@@ -14,6 +16,31 @@ const EditProfileModal = () => {
 	const handleInputChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
+	
+	const { mutate: updateProfile, isPending: isUpdating, error: updateError } = useMutation({
+    mutationFn: async () => {
+
+
+console.log(formData)
+    
+      const res = await fetch(`http://localhost:8000/api/user/updateProfile`, {
+        method: "POST",
+        headers: {
+  "Content-Type": "application/json",
+},
+        body: JSON.stringify(formData),
+        credentials: "include",
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      return data;
+    },
+    onSuccess: () => {
+      alert("Profile updated");
+      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+    },
+  });
 
 	return (
 		<>
@@ -94,7 +121,7 @@ const EditProfileModal = () => {
 							name='link'
 							onChange={handleInputChange}
 						/>
-						<button className='btn btn-primary rounded-full btn-sm text-white'>Update</button>
+						<button onClick={updateProfile} className='btn btn-primary rounded-full btn-sm text-white'>Update</button>
 					</form>
 				</div>
 				<form method='dialog' className='modal-backdrop'>
