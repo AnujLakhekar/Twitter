@@ -22,7 +22,7 @@ const app = express();
 const PORT = process.env.PORT || 8000; 
 
 app.use(cors({
-  origin: "http://localhost:3000", 
+  origin: "https://twitter-hnb1.onrender.com/signup", 
   credentials: true
 }));
 
