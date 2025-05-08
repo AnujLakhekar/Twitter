@@ -11,7 +11,7 @@ const RightPanel = () => {
 	  queryKey: ["getSuggestions"],
 	  queryFn: async () => {
 	   try {
-	     const res = await fetch("http://localhost:8000/api/user/getSuggested", {
+	     const res = await fetch("https://twitterbackend-205b.onrender.com/api/user/getSuggested", {
 	       method: "POST",
 	       credentials: "include"
 	       });

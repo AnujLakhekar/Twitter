@@ -23,7 +23,7 @@ const EditProfileModal = () => {
 
 console.log(formData)
     
-      const res = await fetch(`http://localhost:8000/api/user/updateProfile`, {
+      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/user/updateProfile`, {
         method: "POST",
         headers: {
   "Content-Type": "application/json",
