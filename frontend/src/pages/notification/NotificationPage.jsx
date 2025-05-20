@@ -13,7 +13,7 @@ const NotificationPage = () => {
 	  queryKey: ["notifications"],
 	  queryFn: async () => {
 	    try {
-	      const res = await fetch("https://twitterbackend-205b.onrender.com/notifications", {
+	      const res = await fetch("https://twitterbackend-205b.onrender.com/api/notifications/", {
 	        credentials: "include"
 	      });
 	      const data = await res.json();

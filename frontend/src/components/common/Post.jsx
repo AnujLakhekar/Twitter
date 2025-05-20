@@ -21,7 +21,7 @@ const Post = ({ post }) => {
 	const {mutate:deletePosts, isPending, error, isError} = useMutation({
 	  mutationFn: async () => {
 	    try {
-	      const res = await fetch(`http://localhost:8000/api/post/delete/${post._id}`, {
+	      const res = await fetch(`https://twitter-hnb1.onrender.com/api/post/delete/${post._id}`, {
 	        method: "DELETE",
 	        credentials: "include"
 	        });
@@ -41,7 +41,7 @@ const Post = ({ post }) => {
 	const {mutate:commentPost, isPending:isCommenting, error:errorComment} = useMutation({
 	  mutationFn: async () => {
 	   try {
-	     const res = await fetch(`http://localhost:8000/api/post/comment/${post._id}`, {
+	     const res = await fetch(`https://twitter-hnb1.onrender.com/api/post/comment/${post._id}`, {
 	       method: "POST",
 	       headers: {
 	         "Content-Type":"application/json"
@@ -69,7 +69,7 @@ const Post = ({ post }) => {
 	const {mutate:likePost, isPending:isLiking} = useMutation({
 	  mutationFn: async () => {
 	    try {
-	      const res = await fetch(`http://localhost:8000/api/post/like/${post._id}`, {
+	      const res = await fetch(`https://twitter-hnb1.onrender.com/api/post/like/${post._id}`, {
 	       method: "POST",
 	       headers: {
 	         "Content-Type":"application/json"
@@ -93,7 +93,7 @@ const Post = ({ post }) => {
 	const {mutate:Share, isPending:isSharing} = useMutation({
 	  mutationFn: async () => {
 	    try {
-	      const res = await fetch(`http://localhost:8000/api/post/share/${post._id}`, {
+	      const res = await fetch(`https://twitter-hnb1.onrender.com/api/post/share/${post._id}`, {
 	       method: "POST",
 	       headers: {
 	         "Content-Type":"application/json"
