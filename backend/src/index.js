@@ -22,7 +22,7 @@ const app = express();
 const PORT = process.env.PORT || 8000; 
 
 app.use(cors({
-  origin: "https://twitterbackend-205b.onrender.com", 
+  origin: "https://twitter-hnb1.onrender.com", 
   credentials: true
 }));
 
