@@ -1,6 +1,7 @@
 import { FaRegComment } from "react-icons/fa";
 import { BiRepost } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
+import LoadingSpinner from "../../components/common/LoadingSpinner.jsx"
 import { FaRegBookmark } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa";
 import { useState } from "react";
@@ -20,7 +21,7 @@ const Post = ({ post }) => {
 	const {mutate:deletePosts, isPending, error, isError} = useMutation({
 	  mutationFn: async () => {
 	    try {
-	      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/post/delete/${post._id}`, {
+	      const res = await fetch(`http://localhost:8000/api/post/delete/${post._id}`, {
 	        method: "DELETE",
 	        credentials: "include"
 	        });
@@ -40,11 +41,12 @@ const Post = ({ post }) => {
 	const {mutate:commentPost, isPending:isCommenting, error:errorComment} = useMutation({
 	  mutationFn: async () => {
 	   try {
-	     const res = await fetch(`https://twitterbackend-205b.onrender.com/api/post/comment/${post._id}`, {
+	     const res = await fetch(`http://localhost:8000/api/post/comment/${post._id}`, {
 	       method: "POST",
 	       headers: {
 	         "Content-Type":"application/json"
 	       },
+	       credentials: "include",
 	       body: JSON.stringify({text: comment})
 	     });
 	     
@@ -64,8 +66,57 @@ const Post = ({ post }) => {
 	})
 	
 	
+	const {mutate:likePost, isPending:isLiking} = useMutation({
+	  mutationFn: async () => {
+	    try {
+	      const res = await fetch(`http://localhost:8000/api/post/like/${post._id}`, {
+	       method: "POST",
+	       headers: {
+	         "Content-Type":"application/json"
+	       },
+	       credentials: "include",
+	     });
+	     
+	     console.log(post._id)
+	     
+	     const data = await res.json()
+	     return data;
+	    } catch (e) {
+	      console.log(e.message)
+	    }
+	  },
+	  onSuccess: () => {
+	    queryClient.invalidateQueries({ queryKey: ["posts"] });
+	  }
+	})
+	
+	const {mutate:Share, isPending:isSharing} = useMutation({
+	  mutationFn: async () => {
+	    try {
+	      const res = await fetch(`http://localhost:8000/api/post/share/${post._id}`, {
+	       method: "POST",
+	       headers: {
+	         "Content-Type":"application/json"
+	       },
+	       credentials: "include",
+	     });
+	     
+	     console.log(post._id)
+	     
+	     const data = await res.json()
+	     return data;
+	    } catch (e) {
+	      console.log(e.message)
+	    }
+	  },
+	  onSuccess: () => {
+	    queryClient.invalidateQueries({ queryKey: ["posts"] });
+	  }
+	})
+	
+	
 	const postOwner = post.user;
-	const isLiked = false;
+	const isLiked = post.likes.includes(authUser._id);
 
 	const isMyPost = authUser._id === post.user._id;
 
@@ -83,7 +134,17 @@ const Post = ({ post }) => {
 		commentPost();
 	};
 
-	const handleLikePost = () => {};
+	const handleLikePost = (e) => {
+	  e.preventDefault();
+		if (isLiking) return;
+		likePost();
+	};
+	
+	const handleShare = (e) => {
+	  e.preventDefault()
+	  if (isSharing) return;
+	  Share()
+	}
 
 	return (
 		<>
@@ -145,7 +206,7 @@ const Post = ({ post }) => {
 												<div className='avatar'>
 													<div className='w-8 rounded-full'>
 														<img
-															src={comment.user.profileImg || "/avatar-placeholder.png"}
+															src={comment.user.profilePic || "/avatar-placeholder.png"}
 														/>
 													</div>
 												</div>
@@ -184,22 +245,22 @@ const Post = ({ post }) => {
 									<button className='outline-none'>close</button>
 								</form>
 							</dialog>
-							<div className='flex gap-1 items-center group cursor-pointer'>
-								<BiRepost className='w-6 h-6  text-slate-500 group-hover:text-green-500' />
+							<div className='flex gap-1 items-center group cursor-pointer '>
+								<BiRepost className='w-6 h-6  text-slate-500 group-hover:text-green-500' onClick={handleShare} />
 								<span className='text-sm text-slate-500 group-hover:text-green-500'>0</span>
 							</div>
 							<div className='flex gap-1 items-center group cursor-pointer' onClick={handleLikePost}>
-								{!isLiked && (
+								{!isLiked && !isLiking && (
 									<FaRegHeart className='w-4 h-4 cursor-pointer text-slate-500 group-hover:text-pink-500' />
 								)}
-								{isLiked && <FaRegHeart className='w-4 h-4 cursor-pointer text-pink-500 ' />}
+								{isLiked && !isLiking && <FaRegHeart className='w-4 h-4 cursor-pointer text-pink-500 ' />}
 
 								<span
 									className={`text-sm text-slate-500 group-hover:text-pink-500 ${
 										isLiked ? "text-pink-500" : ""
 									}`}
 								>
-									{post.likes.length}
+								{isLiking ? (							<span className='loading loading-spinner loading-[4px]'></span>) : (<>									{post.likes.length}</>)}
 								</span>
 							</div>
 						</div>

@@ -20,8 +20,6 @@ const EditProfileModal = () => {
 	const { mutate: updateProfile, isPending: isUpdating, error: updateError } = useMutation({
     mutationFn: async () => {
 
-
-console.log(formData)
     
       const res = await fetch(`https://twitterbackend-205b.onrender.com/api/user/updateProfile`, {
         method: "POST",
@@ -34,6 +32,7 @@ console.log(formData)
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
+      console.log(data)
       return data;
     },
     onSuccess: () => {
@@ -121,7 +120,9 @@ console.log(formData)
 							name='link'
 							onChange={handleInputChange}
 						/>
-						<button onClick={updateProfile} className='btn btn-primary rounded-full btn-sm text-white'>Update</button>
+						<button onClick={updateProfile} className='btn btn-primary rounded-full btn-sm text-white'>{
+						  isUpdating ? "Updating.." : "Update"
+						}</button>
 					</form>
 				</div>
 				<form method='dialog' className='modal-backdrop'>

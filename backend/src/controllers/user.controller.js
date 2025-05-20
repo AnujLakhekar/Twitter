@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs"
 import {v2 as cloudinary} from "cloudinary"
 
 export const getUserProfile = async (req, res) => {
-  const {username} = req.params;
+  let {username} = req.params;
   try {
     const user = await User.findOne({username}).select("-password");
     

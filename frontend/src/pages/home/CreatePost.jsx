@@ -64,10 +64,10 @@ const CreatePost = () => {
 	};
 
 	return (
-		<div className='flex p-4 items-start gap-4 border-b border-gray-700'>
+		<div className='flex p-4 items-start gap-4 border-b overflow-hidden border-gray-700'>
 			<div className='avatar'>
 				<div className='w-8 rounded-full'>
-					<img src={authUser.profileImg || "/avatar-placeholder.png"} />
+					<img src={authUser.profilePic || "/avatar-placeholder.png"} />
 				</div>
 			</div>
 			<form className='flex flex-col gap-2 w-full' onSubmit={handleSubmit}>
@@ -78,15 +78,15 @@ const CreatePost = () => {
 					onChange={(e) => setText(e.target.value)}
 				/>
 				{img && (
-					<div className='relative w-72 mx-auto'>
+					<div className='relative w-72 mx-auto flex justify-center items-center '>
 						<IoCloseSharp
-							className='absolute top-0 right-0 text-white bg-gray-800 rounded-full w-5 h-5 cursor-pointer'
+							className='fixed top-[76vh] right-[45px] z-50 text-white bg-gray-800 rounded-full w-5 h-5 cursor-pointer'
 							onClick={() => {
 								setImg(null);
 								imgRef.current.value = null;
 							}}
 						/>
-						<img src={img} className='w-full mx-auto h-72 object-contain rounded' />
+						<img src={img} className='w-full fixed top-[75vh] left-32 right-64 mx-auto h-36 object-contain rounded-full ' />
 					</div>
 				)}
 

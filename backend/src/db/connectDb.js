@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect("mongodb+srv://Twitter-database:anujanuj25@cluster0.eadtsgk.mongodb.net/?retryWrites=true&w=majority&appName=cluster0", {
+    const conn = await mongoose.connect("mongodb+srv://anujlakhekar4:wtCwMYPpMOgMG7YE@twitter.opew1lg.mongodb.net/?retryWrites=true&w=majority&appName=Twitter", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

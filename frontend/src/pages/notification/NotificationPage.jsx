@@ -28,7 +28,7 @@ const NotificationPage = () => {
 	const {mutate:deleteNotification, isPending, isError, error} = useMutation({
 	  mutationFn: async () => {
 	    try {
-	      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/delete`, {
+	      const res = await fetch(`https://twitterbackend-205b.onrender.com/api/notifications/delete`, {
 	        credentials: "include"
 	      });
 	      const data = await res.json();

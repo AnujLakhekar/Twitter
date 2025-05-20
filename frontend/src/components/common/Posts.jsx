@@ -10,15 +10,15 @@ const Posts = ({feedType, userId, username}) => {
 	  console.log(username)
 	  switch (feedType) {
 	      case "ForYou":
-	      return "http://localhost:8000/api/post/"
+	      return "https://twitterbackend-205b.onrender.com/api/post/"
 	      case "following":
-	      return "http://localhost:8000/api/post/following"
+	      return "https://twitterbackend-205b.onrender.com/api/post/following"
 	      case "posts":
-	      return `http://localhost:8000/api/post/user/${username}`
+	      return `https://twitterbackend-205b.onrender.com/api/post/user/${username}`
 	      case "likes":
-	      return `http://localhost:8000/api/post/liked/${userId}`
+	      return `https://twitterbackend-205b.onrender.com/api/post/liked/${userId}`
 	      default:
-	      return "http://localhost:8000/api/post/"
+	      return "https://twitterbackend-205b.onrender.com/api/post/"
 	  }
 	}
 	
