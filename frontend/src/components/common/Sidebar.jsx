@@ -9,7 +9,7 @@ import {useMutation, useQuery} from "@tanstack/react-query"
 import {toast} from "react-hot-toast"
 
 const Sidebar = () => {
-  const Nvaigate = useNavigate()
+  const Navigate = useNavigate()
   const {mutate: logout, isPending, isError, error} = useMutation({
     mutationFn: async () => {
       try {

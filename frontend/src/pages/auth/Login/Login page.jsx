@@ -33,13 +33,15 @@ const LoginPage = () => {
 	       console.log(data);
 	       toast.success("Account Joind successfully")
 	       if (!res.ok) throw new Error(data.message);
+	       
+	       toast.success("Login successfully")
+	       
+	       Navigate("/");
 	       return data;
 	    } catch (e) {
 	      console.log(e.message);
+	      toast.error(e.message)
 	    }
-	  },
-	  onSuccess: () => {
-	    Navigate("/");
 	  }
 	})
 

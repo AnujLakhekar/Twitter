@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {useMutation} from "@tanstack/react-query"
 
@@ -18,6 +18,8 @@ const SignUpPage = () => {
 		password: "",
 	});
 	
+	const Navigate = useNavigate()
+	
 	const {mutate, isError, isPending, error} = useMutation({
 	  mutationFn: async ({email, username, fullName, password}) => {
 	    try {
@@ -34,6 +36,7 @@ const SignUpPage = () => {
 	       if (!res.ok) throw new Error(data.message);
 	       console.log(data);
 	       toast.success("Account Created successfully")
+	       Navigate("/")
 	       return data;
 	    } catch (e) {
 	      toast.error(e.message)
