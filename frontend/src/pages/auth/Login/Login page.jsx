@@ -36,7 +36,7 @@ const LoginPage = () => {
 	       
 	       toast.success("Login successfully")
 	       
-	       Navigate("/");
+	       window.location.href = "/"
 	       return data;
 	    } catch (e) {
 	      console.log(e.message);

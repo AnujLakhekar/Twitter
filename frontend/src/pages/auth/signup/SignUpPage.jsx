@@ -37,8 +37,11 @@ const SignUpPage = () => {
 	        );
 	      const data = await res.json()
 	       if (!res.ok) throw new Error(data.message);
-	       console.log(data);
+	       
 	       toast.success("Account Created successfully")
+	       
+	       window.location.href = "/"
+	       
 	       InterValFunc()
 	       return data;
 	    } catch (e) {
