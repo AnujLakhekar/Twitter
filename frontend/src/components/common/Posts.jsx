@@ -7,7 +7,7 @@ import {useMutation, useQuery} from "@tanstack/react-query"
 const Posts = ({feedType, userId, username}) => {
 	
 	const getPost_Endpoint = () => {
-	  console.log(username)
+
 	  switch (feedType) {
 	      case "ForYou":
 	      return "https://twitterbackend-205b.onrender.com/api/post/"

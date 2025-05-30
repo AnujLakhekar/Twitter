@@ -187,6 +187,7 @@ export const getAllPosts = async (req, res) => {
     });
   }
 };
+
 export const getAllLikedPosts = async (req, res) => {
   try {
     const userId = req.params.id;

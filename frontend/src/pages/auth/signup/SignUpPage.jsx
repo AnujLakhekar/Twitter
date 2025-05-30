@@ -19,6 +19,9 @@ const SignUpPage = () => {
 	});
 	
 	const Navigate = useNavigate()
+	const InterValFunc = () => setTimeout(function() {
+	  Navigate("/")
+	}, 2000);
 	
 	const {mutate, isError, isPending, error} = useMutation({
 	  mutationFn: async ({email, username, fullName, password}) => {
@@ -36,7 +39,7 @@ const SignUpPage = () => {
 	       if (!res.ok) throw new Error(data.message);
 	       console.log(data);
 	       toast.success("Account Created successfully")
-	       Navigate("/")
+	       InterValFunc()
 	       return data;
 	    } catch (e) {
 	      toast.error(e.message)
