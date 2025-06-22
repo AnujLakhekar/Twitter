@@ -35,6 +35,11 @@ app.use("/api/user", userRoute);           // User Routes
 app.use("/api/post", postRoute);           // Post Routes
 app.use("/api/notifications", notificationRoute); // Notification Routes
 
+app.get("/ping", (req, res) => {
+  res.status(200).json({
+ message: "pong",
+  })
+})
 
 
 // Start the server
